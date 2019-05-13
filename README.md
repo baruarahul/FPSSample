@@ -2,6 +2,8 @@
 
 # FPS Sample
 
+This fork was created to get Mac support working. Currently it will build, compile, run etc but there are still lots of issues. It's a WIP. Take a look at the `mac-support` branch.
+
 Thanks for checking out our project!
 
 This is a fully functional, first person multiplayer shooter game made in
