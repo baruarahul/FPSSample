@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -210,10 +210,8 @@ public class BuildWindow : EditorWindow
 
     static string GetBuildExeName(BuildTarget buildTarget)
     {
-        if (buildTarget == BuildTarget.PS4)
+        if (buildTarget == BuildTarget.PS4 || buildTarget == BuildTarget.StandaloneOSX)
             return "AutoBuild";
-        else if (buildTarget == BuildTarget.StandaloneOSX)
-            return "AutoBuild.app/Contents/MacOS/AutoBuild";
         else
             return "AutoBuild.exe";
     }
