@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4179231410887290}
   - component: {fileID: 114950011203541216}
-  - component: {fileID: 114106786243282394}
   m_Layer: 0
   m_Name: HDRI_Sky_Level_00
   m_TagString: Untagged
@@ -49,17 +48,3 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: d8d83c69542c30b4eac0af6079d2ab3a, type: 2}
---- !u!114 &114106786243282394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162716743008384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441482e8936e35048a1dffac814e3ef8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Profile: {fileID: 11400000, guid: 94948bb6ad25b7b499539833eb4b3bbd, type: 2}
-  m_BakingSkyUniqueID: 2

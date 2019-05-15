@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using UnityEngine.Experimental.Rendering.HDPipeline;
+//using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.Rendering;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -39,7 +39,7 @@ public class DebugOverlay : MonoBehaviour
 
 #if UNITY_EDITOR
         Camera[] sceneCameras = UnityEditor.SceneView.GetAllSceneCameras();
-        foreach(var camera in sceneCameras)
+        foreach (var camera in sceneCameras)
         {
             camera.gameObject.AddComponent<DebugOverlayCamera>();
         }
@@ -148,7 +148,7 @@ public class DebugOverlay : MonoBehaviour
         float sizey = scaley * size * 1.5f;
         //instance.width
         for (var i = 0; i < count; i++)
-            instance.AddQuad(x + i*sizex, y, sizex, sizey, buf[i], instance.m_CurrentColor);
+            instance.AddQuad(x + i * sizex, y, sizex, sizey, buf[i], instance.m_CurrentColor);
     }
     public static void AddQuadAbsolute(float x, float y, float width, float height, char c, Vector4 col)
     {
@@ -189,8 +189,8 @@ public class DebugOverlay : MonoBehaviour
         instance._DrawText(x, y, ref _buf, l);
         instance.m_CurrentColor = c;
     }
-    
-    
+
+
     public static void Write<T>(Color col, float x, float y, string format, T arg)
     {
         if (instance == null)
@@ -201,7 +201,7 @@ public class DebugOverlay : MonoBehaviour
         instance._DrawText(x, y, ref _buf, l);
         instance.m_CurrentColor = c;
     }
-    public static void Write<T0,T1>(Color col, float x, float y, string format, T0 arg0, T1 arg1)
+    public static void Write<T0, T1>(Color col, float x, float y, string format, T0 arg0, T1 arg1)
     {
         if (instance == null)
             return;
@@ -226,7 +226,7 @@ public class DebugOverlay : MonoBehaviour
         instance._DrawText(x, y, ref _buf, l);
     }
 
-    public static void Write<T0,T1,T2>(Color col, float x, float y, string format, T0 arg0, T1 arg1, T2 arg2)
+    public static void Write<T0, T1, T2>(Color col, float x, float y, string format, T0 arg0, T1 arg1, T2 arg2)
     {
         if (instance == null)
             return;
@@ -345,13 +345,13 @@ public class DebugOverlay : MonoBehaviour
 
     void _DrawGraph(float x, float y, float w, float h, float[][] data, int startSample, Color[] color, float maxRange = -1.0f)
     {
-        if(data == null || data.Length == 0 || data[0] == null)
+        if (data == null || data.Length == 0 || data[0] == null)
             throw new System.ArgumentException("Invalid data argument (data must contain at least one non null array");
 
         var numSamples = data[0].Length;
-        for(int i = 1; i < data.Length; ++i)
+        for (int i = 1; i < data.Length; ++i)
         {
-            if(data[i] == null || data[i].Length != numSamples)
+            if (data[i] == null || data[i].Length != numSamples)
                 throw new System.ArgumentException("Length of data of all arrays must be the same");
         }
 
@@ -423,7 +423,7 @@ public class DebugOverlay : MonoBehaviour
         {
             float sum = 0;
 
-            foreach(var dataset in data)
+            foreach (var dataset in data)
                 sum += dataset[i];
 
             if (sum > maxData)
@@ -464,7 +464,7 @@ public class DebugOverlay : MonoBehaviour
     {
         m_NumQuadsUsed = 0;
         m_NumLinesUsed = 0;
-       
+
         SetOrigin(0, 0);
     }
 
@@ -479,32 +479,32 @@ public class DebugOverlay : MonoBehaviour
         Graphics.DrawProcedural(MeshTopology.Triangles, m_NumQuadsToDraw * 6, 1);
     }
 
-    public static void Render(HDCamera hdCamera, CommandBuffer cmd)
+    public static void Render(/* HDCamera hdCamera,*/ CommandBuffer cmd)
     {
         if (!instance)
             return;
-        instance._Render(hdCamera, cmd);
+        instance._Render(/* hdCamera, */cmd);
     }
 
-    public static void Render3D(HDCamera hdCamera, CommandBuffer cmd)
+    public static void Render3D(/* HDCamera hdCamera, */CommandBuffer cmd)
     {
         if (!instance)
             return;
-        instance._Render3D(hdCamera, cmd);
+        instance._Render3D(/* hdCamera,*/ cmd);
     }
-    
-    void _Render(HDCamera hdCamera, CommandBuffer cmd)
+
+    void _Render(/* HDCamera hdCamera, */CommandBuffer cmd)
     {
-        if (hdCamera.camera.cameraType != CameraType.Game)
-             return;
+        /* if (hdCamera.camera.cameraType != CameraType.Game)
+             return;*/
 
         cmd.DrawProcedural(Matrix4x4.identity, m_LineMaterial, 0, MeshTopology.Triangles, m_NumLinesToDraw * 6, 1);
         cmd.DrawProcedural(Matrix4x4.identity, instanceMaterialProc, 0, MeshTopology.Triangles, m_NumQuadsToDraw * 6, 1);
     }
 
-    void _Render3D(HDCamera hdCamera, CommandBuffer cmd)
+    void _Render3D(/* HDCamera hdCamera, */CommandBuffer cmd)
     {
-        if(m_line3DBuffer != null)
+        if (m_line3DBuffer != null)
         {
             m_line3DBuffer.HDDraw(cmd);
         }

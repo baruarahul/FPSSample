@@ -112,7 +112,7 @@ public class OptionsMenu : MonoBehaviour
         foreach (var r in Screen.resolutions)
             resHash.Add(r.width + "x" + r.height/* + "@" + r.refreshRate*/);
         var res = new List<string>(resHash);
-        res.Sort((a,b) =>
+        res.Sort((a, b) =>
         {
             var asplit = a.Split('x');
             var bsplit = b.Split('x');
@@ -152,9 +152,9 @@ public class OptionsMenu : MonoBehaviour
 
     public void UpdateMenu()
     {
-        foreach(var o in options)
+        foreach (var o in options)
         {
-            if(o.changed)
+            if (o.changed)
             {
                 o.changed = false;
                 o.UpdateToConfigVar();
@@ -168,7 +168,7 @@ public class OptionsMenu : MonoBehaviour
     public void OnGDRP()
     {
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-        UnityEngine.Analytics.DataPrivacy.FetchPrivacyUrl(OnUrlReceived, OnFailure);
+        //UnityEngine.Analytics.DataPrivacy.FetchPrivacyUrl(OnUrlReceived, OnFailure);
 #endif
     }
 
