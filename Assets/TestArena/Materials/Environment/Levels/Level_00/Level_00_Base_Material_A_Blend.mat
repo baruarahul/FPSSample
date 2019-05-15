@@ -512,6 +512,7 @@ Material:
     - _PreRefractionPass: 0
     - _ReceiveShadows: 1
     - _RefractionMode: 0
+    - _SampleGI: 0
     - _ShiverDirectionality: 0.5
     - _ShiverDrag: 0.2
     - _ShowLayer0: 1
@@ -583,9 +584,15 @@ Material:
     - _UVDetail3: 0
     - _UVEmissive: 0
     - _UVSec: 0
+    - _UseAoMap: 0
+    - _UseColorMap: 0
     - _UseDensityMode: 0
+    - _UseEmissiveMap: 0
     - _UseHeightBasedBlend: 0
     - _UseMainLayerInfluence: 1
+    - _UseMetallicMap: 0
+    - _UseNormalMap: 0
+    - _UseRoughnessMap: 0
     - _VertexColorMode: 0
     - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 3
@@ -625,3 +632,5 @@ Material:
     - _UVMappingMask3: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskBlendMask: {r: 0, g: 0, b: 1, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+    - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
