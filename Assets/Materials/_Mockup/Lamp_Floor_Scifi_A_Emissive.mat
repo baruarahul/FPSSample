@@ -19,7 +19,7 @@ Material:
   - DistortionVectors
   - TransparentBackfaceDebugDisplay
   - TransparentDepthPrepass
-  - TransparentDepthPostpass
+  - TransparentDepthPostPass
   - TransparentBackface
   - MOTIONVECTORS
   m_SavedProperties:

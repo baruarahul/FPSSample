@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Experimental.Rendering;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 [VolumeComponentEditor(typeof(VFXVolumeMixer))]
@@ -56,7 +56,7 @@ public class VFXVolumeMixerEditor : VolumeComponentEditor
     public override void OnInspectorGUI()
     {
         EditorGUILayout.LabelField("Float Properties", EditorStyles.boldLabel);
-        for(int i = 0; i < VFXVolumeMixerSettings.floatPropertyCount; i++)
+        for (int i = 0; i < VFXVolumeMixerSettings.floatPropertyCount; i++)
         {
             NamedPropertyField(m_CustomFloatParameters[i], VFXVolumeMixerSettings.floatPropertyNames[i]);
         }

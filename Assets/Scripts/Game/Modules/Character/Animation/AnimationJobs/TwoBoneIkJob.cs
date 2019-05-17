@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Animations;
 
 public struct TwoBoneIKJob : IAnimationJob
-{   
+{
     TransformStreamHandle m_EndHandle;
     TransformStreamHandle m_StartHandle;
     TransformStreamHandle m_MidHandle;
@@ -13,24 +13,24 @@ public struct TwoBoneIKJob : IAnimationJob
     PropertySceneHandle m_WeightHandle;
     PropertyStreamHandle m_AnimatorWeight;
     PropertySceneHandle m_AnimatorWeightOffset;
-    
+
     IkType m_IkType;
     AvatarIKGoal m_HumanLimb;
 
     Vector3 m_TargetOffset;
-//    float m_TargetOffsetX;
-//    float m_TargetOffsetY;
-//    float m_TargetOffsetZ;
-//    
+    //    float m_TargetOffsetX;
+    //    float m_TargetOffsetY;
+    //    float m_TargetOffsetZ;
+    //    
     bool m_UseStreamEffector;
-    bool m_UseAnimatorProperty;    
-    
+    bool m_UseAnimatorProperty;
+
     public enum TargetType
     {
         Scene,
         Stream
     }
-    
+
     public enum IkType
     {
         Generic,
@@ -39,7 +39,7 @@ public struct TwoBoneIKJob : IAnimationJob
 
     [Serializable]
     public struct WeightProperty
-    {        
+    {
         [Range(0f, 1f)]
         public float value;
         public bool useAnimatorProperty;
@@ -64,7 +64,7 @@ public struct TwoBoneIKJob : IAnimationJob
         public AvatarIKGoal humanoidLimb;
     }
 
-    
+
     [Serializable]
     public struct IkChain
     {
@@ -76,7 +76,7 @@ public struct TwoBoneIKJob : IAnimationJob
         {
             if (driven.type == IkType.Generic)
             {
-                return target.target != null && driven.genericEndJoint != null && driven.genericEndJoint.parent != null && driven.genericEndJoint.parent.parent != null;             
+                return target.target != null && driven.genericEndJoint != null && driven.genericEndJoint.parent != null && driven.genericEndJoint.parent.parent != null;
             }
             if (driven.type == IkType.Humanoid)
             {
@@ -91,7 +91,7 @@ public struct TwoBoneIKJob : IAnimationJob
     {
         if (!chain.HasValidData())
             return false;
-        
+
         // Target
         m_TargetOffset = chain.target.offset;
 
@@ -105,31 +105,31 @@ public struct TwoBoneIKJob : IAnimationJob
             m_EffectorSceneHandle = animator.BindSceneTransform(chain.target.target);
             m_UseStreamEffector = false;
         }
-        
-        
+
+
         // Weight
         if (chain.weight.useAnimatorProperty && chain.weight.propertyName != "")
         {
             m_AnimatorWeight = animator.BindStreamProperty(animator.transform, typeof(Animator), chain.weight.propertyName);
             m_UseAnimatorProperty = true;
         }
-        
+
         m_WeightHandle = animator.BindSceneProperty(animator.transform, componentType, weightProperty);
-        m_AnimatorWeightOffset = animator.BindSceneProperty(animator.transform, componentType, weightOffsetProperty);        
-        
-        
+        m_AnimatorWeightOffset = animator.BindSceneProperty(animator.transform, componentType, weightOffsetProperty);
+
+
         // Driven
         m_IkType = chain.driven.type;
-        
+
         if (m_IkType == IkType.Generic)
         {
             var end = chain.driven.genericEndJoint;
             var mid = end.parent;
             var start = mid.parent;
-               
+
             m_StartHandle = animator.BindStreamTransform(start);
             m_MidHandle = animator.BindStreamTransform(mid);
-            m_EndHandle = animator.BindStreamTransform(end);            
+            m_EndHandle = animator.BindStreamTransform(end);
         }
         else
         {
@@ -149,7 +149,7 @@ public struct TwoBoneIKJob : IAnimationJob
             weight = m_AnimatorWeight.GetFloat(stream);
             weight += m_AnimatorWeightOffset.GetFloat(stream);
             weight = Mathf.Clamp01(weight);
-            m_WeightHandle.SetFloat(stream, weight);
+            //m_WeightHandle.SetFloat(stream, weight);
         }
         else
         {
@@ -171,25 +171,25 @@ public struct TwoBoneIKJob : IAnimationJob
             effectorRotation = m_EffectorSceneHandle.GetRotation(stream);
         }
 
-        effectorRotation *= Quaternion.Euler(m_TargetOffset);        
-        
+        effectorRotation *= Quaternion.Euler(m_TargetOffset);
+
         if (m_IkType == IkType.Generic)
         {
-            AnimJobUtilities.SolveTwoBoneIK(stream, m_StartHandle, m_MidHandle, m_EndHandle, effectorPosition, effectorRotation, weight, weight);            
+            AnimJobUtilities.SolveTwoBoneIK(stream, m_StartHandle, m_MidHandle, m_EndHandle, effectorPosition, effectorRotation, weight, weight);
         }
-        
+
         else if (m_IkType == IkType.Humanoid)
         {
             if (stream.isHumanStream)
             {
                 var humanStream = stream.AsHuman();
-                
+
                 humanStream.SetGoalPosition(m_HumanLimb, effectorPosition);
                 humanStream.SetGoalRotation(m_HumanLimb, effectorRotation);
                 humanStream.SetGoalWeightPosition(m_HumanLimb, weight);
                 humanStream.SetGoalWeightRotation(m_HumanLimb, weight);
                 humanStream.SolveIK();
             }
-        }  
+        }
     }
 }

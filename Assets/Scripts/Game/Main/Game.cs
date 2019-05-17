@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine.Experimental.Rendering;
+using UnityEngine.Rendering;
 //using UnityEngine.Experimental.Rendering.HDPipeline;
 using System;
 using System.Globalization;
@@ -324,6 +324,8 @@ public class Game : MonoBehaviour
             DontDestroyOnLoad(m_DebugOverlay);
             m_DebugOverlay.Init();
 
+            RenderPipelineManager.beginFrameRendering += OnBeginRenderFrame;
+            RenderPipelineManager.endFrameRendering += OnEndRenderFrame;
             /* var hdpipe = RenderPipelineManager.currentPipeline as HDRenderPipeline;
             if (hdpipe != null)
             {
@@ -450,6 +452,24 @@ public class Game : MonoBehaviour
         Console.ProcessCommandLineArguments(commandLineArgs.ToArray());
 
         PushCamera(bootCamera);
+    }
+
+    private void OnBeginRenderFrame(ScriptableRenderContext ctx, Camera[] cams)
+    {
+
+        //DebugOverlay.Render3D();
+    }
+
+    private void OnEndRenderFrame(ScriptableRenderContext ctx, Camera[] cams)
+    {
+        CommandBuffer cmd = new CommandBuffer();
+        if (m_DebugOverlay != null)
+        {
+            m_DebugOverlay.TickLateUpdate();
+        }
+        DebugOverlay.Render(cmd);
+        ctx.ExecuteCommandBuffer(cmd);
+        cmd.Release();
     }
 
     public Camera TopCamera()
@@ -670,8 +690,8 @@ public class Game : MonoBehaviour
         if (m_GameStatistics != null)
             m_GameStatistics.TickLateUpdate();
 
-        if (m_DebugOverlay != null)
-            m_DebugOverlay.TickLateUpdate();
+        //if (m_DebugOverlay != null)
+        //   m_DebugOverlay.TickLateUpdate();
     }
 
     void OnApplicationQuit()

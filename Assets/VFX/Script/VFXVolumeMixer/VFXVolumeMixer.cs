@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
+using UnityEngine.Rendering;
 
 public class VFXVolumeMixer : VolumeComponent
 {
@@ -41,7 +41,7 @@ public class VFXVolumeMixer : VolumeComponent
             return s_Stack;
         }
     }
-    static VolumeStack s_Stack; 
+    static VolumeStack s_Stack;
 
     static void UpdateStack(Transform trigger, LayerMask layerMask)
     {
@@ -57,18 +57,18 @@ public class VFXVolumeMixer : VolumeComponent
     public static float GetFloatValueAt(int index)
     {
         var component = stack.GetComponent<VFXVolumeMixer>();
-        
-        switch(index)
+
+        switch (index)
         {
             default: throw new System.IndexOutOfRangeException();
-            case 0: return component.CustomFloatParameter1.value; 
-            case 1: return component.CustomFloatParameter2.value; 
-            case 2: return component.CustomFloatParameter3.value; 
-            case 3: return component.CustomFloatParameter4.value; 
-            case 4: return component.CustomFloatParameter5.value; 
-            case 5: return component.CustomFloatParameter6.value; 
-            case 6: return component.CustomFloatParameter7.value; 
-            case 7: return component.CustomFloatParameter8.value; 
+            case 0: return component.CustomFloatParameter1.value;
+            case 1: return component.CustomFloatParameter2.value;
+            case 2: return component.CustomFloatParameter3.value;
+            case 3: return component.CustomFloatParameter4.value;
+            case 4: return component.CustomFloatParameter5.value;
+            case 5: return component.CustomFloatParameter6.value;
+            case 6: return component.CustomFloatParameter7.value;
+            case 7: return component.CustomFloatParameter8.value;
         }
     }
 
